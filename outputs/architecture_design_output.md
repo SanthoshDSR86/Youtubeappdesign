@@ -10,55 +10,41 @@ This is a code bundle for YouTube App Design. The original project is available 
 
 ## 2. High-Level Architecture
 The system operates as a Component-Based Architecture.
-The technology stack includes modern technologies such as React, Vite, and FastAPI, with a utility-first CSS approach using Tailwind. The backend is built using FastAPI and Python, with a relational database management system like PostgreSQL.
+The technology stack includes TypeScript, Next.js, React, Vite, FastAPI, Python, Uvicorn, Pydantic, PostgreSQL, SQLite, Redis, npm/yarn, and various dependencies.
 
 ### 2.1 System Context Diagram
 ```mermaid
 graph TD
-    User -->|Request|> Frontend
-    Frontend -->|Request|> Backend
-    Backend -->|Query|> Database
-    Database -->|Response|> Backend
-    Backend -->|Response|> Frontend
-    Frontend -->|Response|> User
+    User -->|Interacts with|> Frontend
+    Frontend -->|Sends request to|> Backend
+    Backend -->|Retrieves/Stores data from|> Database
+    Database -->|Returns data to|> Backend
+    Backend -->|Returns response to|> Frontend
+    Frontend -->|Displays response to|> User
 ```
 
 ### 2.2 Layered Architecture Diagram
 ```mermaid
 graph TD
-    Presentation_Layer[Presentation Layer] -->|Request|> Business_Layer[Business Layer]
-    Business_Layer -->|Query|> Data_Layer[Data Layer]
-    Data_Layer -->|Response|> Business_Layer
-    Business_Layer -->|Response|> Presentation_Layer
-    subgraph Presentation Layer
-        React --> Vite
-    end
-    subgraph Business Layer
-        FastAPI --> Python
-    end
-    subgraph Data Layer
-        PostgreSQL --> Database
-    end
+    Presentation_Layer[Frontend (React, Vite)] -->|Uses|> Business_Layer[Backend (FastAPI, Python)]
+    Business_Layer -->|Interacts with|> Data_Layer[Database (PostgreSQL, SQLite, Redis)]
+    Data_Layer -->|Stores/Retrieves data for|> Business_Layer
+    Business_Layer -->|Provides data to|> Presentation_Layer
+    Presentation_Layer -->|Displays data to|> User
 ```
 
 ## 3. Endpoints Specification
 Total Endpoints: 0
 ### Key Endpoints
-As there are no endpoints available, the following are some potential endpoints that could be implemented:
-* GET /users
-* GET /videos
-* POST /videos
-* PUT /videos/:id
-* DELETE /videos/:id
+No endpoints are available for this project.
 
 ## 4. Operational Workflows
-The request lifecycle begins with the user making a request to the frontend. The frontend then sends a request to the backend, which processes the request and queries the database if necessary. The database responds with the required data, which is then sent back to the backend. The backend processes the data and sends a response back to the frontend, which finally sends a response to the user.
+The system operates as a Single Page Application (SPA) with a React frontend and a FastAPI backend. When a user interacts with the frontend, it sends a request to the backend, which then retrieves or stores data from the database. The backend returns a response to the frontend, which displays the response to the user.
 
 ## 5. Deployment & Security
-The deployment architecture is not containerized and does not have a CI/CD pipeline. The security model uses JWT token authentication and has basic security measures in place. However, there are some security risks, such as hardcoded secrets and a lack of authorization layer.
+The deployment architecture is not containerized and lacks orchestration, CI/CD pipeline, and cloud readiness. The security model uses JWT token authentication but lacks authorization layer, data protection, and security headers. The system has hardcoded secrets, which poses a high security risk.
 
 ## 6. Recommendations
-The following recommendations are made:
 * Add comprehensive testing strategy (unit, integration, e2e tests)
 * Implement containerization with Docker for consistent deployments
 * Set up CI/CD pipeline for automated testing and deployment
